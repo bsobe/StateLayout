@@ -1,10 +1,11 @@
 # StateLayout
 [![](https://jitpack.io/v/erkutaras/StateLayout.svg)](https://jitpack.io/#erkutaras/StateLayout)
+[![](https://img.shields.io/badge/Android%20Arsenal-StateLayout-brightgreen.svg)](https://android-arsenal.com/details/1/7435)
 [![](https://img.shields.io/badge/build%20for-android-green.svg)](https://www.android.com)
 [![](https://img.shields.io/badge/made%20with-kotlin-blue.svg)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-<img src="https://raw.githubusercontent.com/erkutaras/StateLayout/develop/gifs/statelayout.gif" width="250">
+<img src="https://raw.githubusercontent.com/erkutaras/StateLayout/develop/gifs/statelayout.gif" width="250">     <img src="https://raw.githubusercontent.com/erkutaras/StateLayout/develop/gifs/statelayout_custom.gif" width="250">
 
 StateLayout is a simple-use Android layout library which handles Loading, Content and Error/Info states for the activity/fragment/view. 
 
@@ -31,7 +32,19 @@ allprojects {
 **Step 2.** Add the library dependency to your project build.gradle:
 ```
 dependencies {
-    implementation 'com.github.erkutaras:StateLayout:1.0.1'
+    implementation 'com.github.erkutaras:StateLayout:1.3.2'
+}
+```
+
+**Optional Step.** Add the library dependency to your project build.gradle with excluded androidx.appcompat:
+
+_If you don't migrate your project with AndroidX yet, you may need to exclude androidx to prevent support libraries issues._
+
+```
+dependencies {
+    implementation ('com.github.erkutaras:StateLayout:1.3.2') {
+        exclude group: 'androidx.appcompat'
+    }
 }
 ```
 
@@ -39,30 +52,26 @@ dependencies {
 
 Simple flow for your application: First of all, add StateLayout to where you want to change states and add one direct child within that layout. After that, when your releated screen is opened, call stateLayout.loading() and request the API. After the response, change the state accocrding to the response. If there is no error, call stateLayout.content(), otherwise call info state's functions. If you want to show loading and request to API, when the content is visible, call stateLayout.loadingWithContent() and request. When the api call ended, you can change the state. 
 
+### 1. Simple Usage
 - If you want to change or update design of the layouts(layout_state_loading.xml, layout_state_loading_with_content.xml, layout_state_info.xml), create layouts with **SAME** name in your project. 
 
 - To use info state functions like stateLayout.infoImage(), please use **same ids** fot the views.
 
 **Sample code:**
-```
+```xml
 <com.erkutaras.statelayout.StateLayout
     android:id="@+id/stateLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
         <!-- CONTENT -->
-        
     </RelativeLayout>
-
 </com.erkutaras.statelayout.StateLayout>
 ```   
-```
+```kotlin
 val stateLayout = findViewById<StateLayout>(R.id.stateLayout)
         
 // loading 
@@ -83,6 +92,80 @@ stateLayout.infoImage(R.drawable.ic_android_black_64dp)
 stateLayout.info()
 ``` 
 
+### 2. Custom Usage
+- If you want to fully change your custom layouts which are used in StateLayout, you can use **loadingLayout**, **infoLayout**, **loadingWithContentLayout**. These attributes values can be layout references.
+
+```xml
+<com.erkutaras.statelayout.StateLayout
+        android:id="@+id/stateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:loadingLayout="@layout/layout_custom_loading"
+        app:infoLayout="@layout/layout_custom_info"
+        app:state="content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- CONTENT -->
+        </RelativeLayout>
+    </com.erkutaras.statelayout.StateLayout>
+``` 
+- **state** attribute can be used for initial state for layout. Values of state attributes: 
+```
+loading / content / info / loading_with_content / error / empty / none
+```  
+```kotlin
+val stateLayout = findViewById<StateLayout>(R.id.stateLayout)
+        
+// custom loading 
+stateLayout.loading(R.layout.layout_custom_loading)
+        
+// content 
+stateLayout.content()
+        
+// custom loading with content
+stateLayout.loadingWithContent(R.layout.layout_custom_loading_with_content)
+
+// custom error/info 
+stateLayout.info(R.layout.layout_custom_info)
+```   
+
+### 3. Using Animation
+- Animations are also supported for LOADING and LOADING_WITH_CONTENT states after 1.3.0. If you want to use animation in the states, you need to use ids which are implemented in the library. 
+
+**ids:** 
+```customView_state_layout_loading``` can be used in layout_state_loading.xml or your custom loading layout. ```customView_state_layout_with_content``` can be used in layout_state_loading_with_content.xml or your custom loading wit content layout.
+
+**attrs:** 
+```loadingAnimation``` can be used for LOADING state. ```loadingWithContentAnimation``` can be used for LOADING_WITH_CONTENT state
+```xml
+<com.erkutaras.statelayout.StateLayout
+    android:id="@+id/stateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:loadingAnimation="@anim/anim_blink"
+    app:loadingWithContentAnimation="@anim/anim_blink">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- CONTENT -->    
+    </RelativeLayout>
+</com.erkutaras.statelayout.StateLayout>
+```   
+```kotlin
+val stateLayout = findViewById<StateLayout>(R.id.stateLayout)
+val animation = AnimationUtils.loadAnimation(context, R.anim.anim_blink)
+        
+// loading with animation if the view id's is customView_state_layout_loading
+stateLayout.loadingAnimation(animation)
+        
+// loading with animation if the view id's is customView_state_layout_with_content
+stateLayout.loadingWithContentAnimation(animation)
+``` 
+
+
 ## Issues
 
 If you've found an error in this library, please file an [issue][1].
@@ -98,7 +181,7 @@ Patches and new features are encouraged, and may be submitted by [forking this p
 
 # License
 
-    Copyright 2018 erkutaras
+    Copyright 2018-2019 erkutaras
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

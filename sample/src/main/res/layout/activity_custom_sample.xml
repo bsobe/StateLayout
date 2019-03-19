@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        app:loadingLayout="@layout/layout_custom_loading"
+        app:infoLayout="@layout/layout_custom_info"
         app:state="content">
 
         <WebView

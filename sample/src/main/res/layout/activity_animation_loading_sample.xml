@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        app:loadingLayout="@layout/layout_loading_with_animation"
+        app:loadingAnimation="@anim/anim_blink"
         app:state="content">
 
         <WebView
