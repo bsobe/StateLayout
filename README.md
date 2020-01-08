@@ -1,5 +1,5 @@
 # StateLayout
-[![](https://jitpack.io/v/erkutaras/StateLayout.svg)](https://jitpack.io/#erkutaras/StateLayout)
+[![](https://jitpack.io/v/Trendyol/StateLayout.svg)](https://jitpack.io/#Trendyol/StateLayout)
 [![](https://img.shields.io/badge/Android%20Arsenal-StateLayout-brightgreen.svg)](https://android-arsenal.com/details/1/7435)
 [![](https://img.shields.io/badge/build%20for-android-green.svg)](https://www.android.com)
 [![](https://img.shields.io/badge/made%20with-kotlin-blue.svg)](https://kotlinlang.org)
@@ -32,7 +32,7 @@ allprojects {
 **Step 2.** Add the library dependency to your project build.gradle:
 ```
 dependencies {
-    implementation 'com.github.erkutaras:StateLayout:1.4.1'
+    implementation 'com.github.erkutaras:StateLayout:1.4.3'
 }
 ```
 
