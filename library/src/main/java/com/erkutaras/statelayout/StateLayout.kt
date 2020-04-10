@@ -221,10 +221,10 @@ class StateLayout @JvmOverloads constructor(context: Context,
         info()
     }
 
-    fun infoButtonText(buttonText: String): StateLayout {
+    fun infoButtonText(buttonText: String?): StateLayout {
         infoLayout.findView<Button>(R.id.button_state_layout_info) {
             text = buttonText
-            visibility = View.VISIBLE
+            visibility = if (buttonText.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
         return info()
     }
@@ -298,7 +298,7 @@ class StateLayout @JvmOverloads constructor(context: Context,
                 stateInfo.infoImage?.let { infoImage(it) }
                 stateInfo.infoTitle?.let { infoTitle(it) }
                 stateInfo.infoMessage?.let { infoMessage(it) }
-                stateInfo.infoButtonText?.let { infoButtonText(it) }
+                stateInfo.infoButtonText.let { infoButtonText(it) }
                 stateInfo.onStateLayoutListener?.let { infoButtonListener(it) }
                 stateInfo.onInfoButtonClick?.let { infoButtonListener(it) }
             }
