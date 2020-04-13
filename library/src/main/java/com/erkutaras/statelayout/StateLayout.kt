@@ -1,6 +1,7 @@
 package com.erkutaras.statelayout
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
@@ -10,15 +11,14 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StyleRes
 import com.erkutaras.statelayout.StateLayout.State.*
 
 /**
  * Created by erkutaras on 9.09.2018.
  */
-class StateLayout @JvmOverloads constructor(context: Context,
-                                            attrs: AttributeSet? = null,
-                                            defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr) {
+class StateLayout: FrameLayout {
 
     private var contentLayout: View? = null
     private var loadingLayout: View? = null
@@ -37,29 +37,43 @@ class StateLayout @JvmOverloads constructor(context: Context,
     private var loadingAnimation: Animation? = null
     private var loadingWithContentAnimation: Animation? = null
 
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        obtainCustomAttributes(attrs)
+    }
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        obtainCustomAttributes(attrs, defStyleAttr)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        obtainCustomAttributes(attrs, defStyleAttr, defStyleRes)
+    }
+
+    private fun obtainCustomAttributes(attrs: AttributeSet?, defStyleAttr: Int = 0, @StyleRes defStyleRes: Int = 0) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StateLayout, defStyleAttr, defStyleRes)
+        typedArray.runCatching {
+            state = State.values()[getInteger(R.styleable.StateLayout_sl_state, NONE.ordinal)]
+            loadingLayoutRes = getResourceId(R.styleable.StateLayout_sl_loadingLayout, R.layout.layout_state_loading)
+            infoLayoutRes = getResourceId(R.styleable.StateLayout_sl_infoLayout, R.layout.layout_state_info)
+            loadingWithContentLayoutRes = getResourceId(R.styleable.StateLayout_sl_loadingWithContentLayout, R.layout.layout_state_loading_with_content)
+
+            getResourceId(R.styleable.StateLayout_sl_loadingAnimation, 0).notZero {
+                loadingAnimation = AnimationUtils.loadAnimation(context, it)
+            }
+            getResourceId(R.styleable.StateLayout_sl_loadingWithContentAnimation, 0).notZero {
+                loadingWithContentAnimation = AnimationUtils.loadAnimation(context, it)
+            }
+        }
+        typedArray.recycle()
+    }
+
     init {
         if (isInEditMode) {
             state = CONTENT
         }
-
-        context.theme.obtainStyledAttributes(attrs, R.styleable.StateLayout, 0, 0)
-            .apply {
-                try {
-                    state = State.values()[getInteger(R.styleable.StateLayout_sl_state, NONE.ordinal)]
-                    loadingLayoutRes = getResourceId(R.styleable.StateLayout_sl_loadingLayout, R.layout.layout_state_loading)
-                    infoLayoutRes = getResourceId(R.styleable.StateLayout_sl_infoLayout, R.layout.layout_state_info)
-                    loadingWithContentLayoutRes = getResourceId(R.styleable.StateLayout_sl_loadingWithContentLayout, R.layout.layout_state_loading_with_content)
-
-                    getResourceId(R.styleable.StateLayout_sl_loadingAnimation, 0).notZero {
-                        loadingAnimation = AnimationUtils.loadAnimation(context, it)
-                    }
-                    getResourceId(R.styleable.StateLayout_sl_loadingWithContentAnimation, 0).notZero {
-                        loadingWithContentAnimation = AnimationUtils.loadAnimation(context, it)
-                    }
-                } finally {
-                    recycle()
-                }
-            }
     }
 
     override fun onFinishInflate() {
@@ -221,10 +235,10 @@ class StateLayout @JvmOverloads constructor(context: Context,
         info()
     }
 
-    fun infoButtonText(buttonText: String): StateLayout {
+    fun infoButtonText(buttonText: String?): StateLayout {
         infoLayout.findView<Button>(R.id.button_state_layout_info) {
             text = buttonText
-            visibility = View.VISIBLE
+            visibility = if (buttonText.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
         return info()
     }
@@ -298,7 +312,7 @@ class StateLayout @JvmOverloads constructor(context: Context,
                 stateInfo.infoImage?.let { infoImage(it) }
                 stateInfo.infoTitle?.let { infoTitle(it) }
                 stateInfo.infoMessage?.let { infoMessage(it) }
-                stateInfo.infoButtonText?.let { infoButtonText(it) }
+                stateInfo.infoButtonText.let { infoButtonText(it) }
                 stateInfo.onStateLayoutListener?.let { infoButtonListener(it) }
                 stateInfo.onInfoButtonClick?.let { infoButtonListener(it) }
             }
