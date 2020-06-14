@@ -32,7 +32,7 @@ allprojects {
 **Step 2.** Add the library dependency to your project build.gradle:
 ```
 dependencies {
-    implementation 'com.github.erkutaras:StateLayout:1.4.3'
+    implementation 'com.github.Trendyol:StateLayout:$state_layout_version'
 }
 ```
 
