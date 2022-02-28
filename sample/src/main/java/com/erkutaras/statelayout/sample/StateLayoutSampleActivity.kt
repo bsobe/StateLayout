@@ -37,9 +37,10 @@ class StateLayoutSampleActivity : SampleBaseActivity(), StateLayout.OnStateLayou
         else super.onBackPressed()
     }
 
-    private class SampleWebViewClient(val stateLayout: StateLayout,
-                                      val onStateLayoutListener: StateLayout.OnStateLayoutListener)
-        : WebViewClient() {
+    private class SampleWebViewClient(
+        val stateLayout: StateLayout,
+        val onStateLayoutListener: StateLayout.OnStateLayoutListener,
+    ) : WebViewClient() {
 
         var hasError: Boolean = false
 
@@ -66,6 +67,5 @@ class StateLayoutSampleActivity : SampleBaseActivity(), StateLayout.OnStateLayou
                     onStateLayoutListener.onStateLayoutInfoButtonClick()
                 }
         }
-
     }
 }
