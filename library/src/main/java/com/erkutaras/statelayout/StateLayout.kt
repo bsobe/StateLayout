@@ -320,6 +320,10 @@ class StateLayout: FrameLayout {
         }
     }
 
+    fun getInfoLayout(): View? {
+        return infoLayout
+    }
+
     companion object {
         @JvmStatic
         fun provideLoadingStateInfo() = StateInfo(state = LOADING)

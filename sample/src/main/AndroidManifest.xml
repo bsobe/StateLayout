@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.erkutaras.statelayout.sample"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    package="com.erkutaras.statelayout.sample"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,18 +14,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".StateLayoutSampleActivity"
-                  android:label="StateLayout - Simple Usage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity
+            android:name=".StateLayoutSampleActivity"
+            android:label="StateLayout - Simple Usage"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomSampleActivity"
-                  android:label="StateLayout - Custom Usage"/>
-        <activity android:name=".AnimationLoadingSampleActivity"
-                  android:label="StateLayout - Animation Loading"/>
+
+        <activity
+            android:name=".CustomSampleActivity"
+            android:label="StateLayout - Custom Usage" />
+
+        <activity
+            android:name=".AnimationLoadingSampleActivity"
+            android:label="StateLayout - Animation Loading" />
+
+        <activity
+            android:name=".InfoLottieSampleActivity"
+            android:label="StateLayout - Lottie" />
     </application>
 
 </manifest>
