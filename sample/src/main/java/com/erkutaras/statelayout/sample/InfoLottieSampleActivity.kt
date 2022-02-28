@@ -4,19 +4,22 @@ import android.os.Bundle
 import android.widget.Toast
 import com.erkutaras.statelayout.StateLayout
 import com.erkutaras.statelayout.lottieext.infoLottie
-import kotlinx.android.synthetic.main.activity_info_lottie_sample.stateLayout
+import com.erkutaras.statelayout.sample.databinding.ActivityInfoLottieSampleBinding
 
 class InfoLottieSampleActivity : SampleBaseActivity(), StateLayout.OnStateLayoutListener {
 
+    private lateinit var binding: ActivityInfoLottieSampleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info_lottie_sample)
+        binding = ActivityInfoLottieSampleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        stateLayout
+        binding.stateLayout
             .infoTitle("Ooops.... :(")
             .infoMessage("Unexpected error occurred. Please refresh the page!")
             .infoButtonText("Refresh")
-            //.infoLottie("like_heart.json")
+            .infoLottie("like_heart.json")
             .infoButtonListener {
                 onStateLayoutInfoButtonClick()
             }
