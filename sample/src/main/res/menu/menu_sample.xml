@@ -9,4 +9,9 @@
         android:id="@+id/menu_loading_animation"
         android:title="@string/loading_animation"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_info_lottie"
+        android:title="@string/info_lottie"
+        app:showAsAction="never"/>
 </menu>

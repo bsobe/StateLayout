@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,10 +16,13 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@id/imageView_state_layout_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginBottom="16dp"
             android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_repeatMode="restart"
+            app:lottie_repeatCount="4"
             tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatTextView
