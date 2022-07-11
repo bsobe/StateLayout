@@ -5,11 +5,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
 /**
  * Created by erkutaras on 2.02.2019.
  */
-abstract class SampleBaseActivity : AppCompatActivity() {
+abstract class SampleBaseActivity<VB : ViewBinding> : AppCompatActivity() {
+
+    open lateinit var binding: VB
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(getMenuResId(), menu)

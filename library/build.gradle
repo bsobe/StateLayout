@@ -1,19 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 group='com.erkutaras.statelayout'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 32
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 26
-        versionName "1.4.4"
-
-        vectorDrawables.useSupportLibrary = true
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 27
+        versionName "1.5.0"
     }
 
     buildTypes {
@@ -27,8 +25,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.4.2'
 }
 repositories {
     mavenCentral()
